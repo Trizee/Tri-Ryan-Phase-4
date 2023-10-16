@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Login from './components/Login'
+import RootLayout from './layout/RootLayout';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  createRoutesFromElements,
+  Route,
+  Link,
+} from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(null)
@@ -23,18 +29,17 @@ function App() {
     setUser(null)
   }
 
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<Login handleLogout={handleLogout} />} />
+      </Route>
+    )
+  )
+
   return (
     <>
-    <button onClick={handleLogout}>Logout</button>
-    {user?.username ? 
-    <p>{user.username}</p>
-    :
-    <p>User doesn't exist</p>
-    }
-    <div>
-      <Login setUser={setUser}/>
-
-    </div>
+      <RouterProvider router={router} />
     </>
   )
 }
