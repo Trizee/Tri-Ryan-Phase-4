@@ -1,17 +1,21 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
-
+from sqlalchemy.sql import func
 from config import db, bcrypt
 
-
+#///////////////////////////////////////////////////////////////////////////////////
 
 class User( db.Model, SerializerMixin):
-    __tablename__ ="users_table"
+    __tablename__ ="user_table"
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String, nullable=False)
+
+    rsvps =db.relationship('rsvp', 'user')
+    event_hosts =db.relationship('event_hosts', 'user')
+
 
     @hybrid_property
     def password_hash(self):
@@ -28,3 +32,45 @@ class User( db.Model, SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8')
         )
+    
+#///////////////////////////////////////////////////////////////////////////////////
+
+class EventHosts(db.Model, SerializerMixin):
+    __tablename__ ="event_hosts_table"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user_table.id"))
+    event_id = db.Column(db.Integer, db.ForeignKey("event_table.id"))
+    created_at = db.Column(db.DateTime, server_default=func.now())
+    updated_at = db.Column(db.DateTime, onupdate=func.now())
+
+    serialize_rules=('-user','-event')
+
+#///////////////////////////////////////////////////////////////////////////////////
+
+class RSVP(db.Model, SerializerMixin):
+    __tablename__ ="rsvp_table"
+
+    id = db.Column(db.Integer)
+    event_id = db.Column(db.Integer, db.ForeignKey("event_table.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user_table.id"))
+    name = db.Column(db.String)
+    phone = db.Column(db.Integer)
+    status = db.Column(db.String)
+
+    serialize_rules=('-user','-event')
+
+#///////////////////////////////////////////////////////////////////////////////////
+
+class Event(db.Model, SerializerMixin):
+    __tablename__ ="event_table"
+
+    id = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.String)
+    time = db.Column(db.Integer)
+    description = db.Column(db.String)
+
+    rsvps =db.relationship('rsvp', 'event')
+    event_hosts =db.relationship('event_hosts', 'event')
+
+#///////////////////////////////////////////////////////////////////////////////////
