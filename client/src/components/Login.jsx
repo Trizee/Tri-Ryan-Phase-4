@@ -1,6 +1,8 @@
 import {useState} from 'react'
+import Caro from './Carousel';
 
-function Login({setUser}) {
+function Login({setUser,handleLogout}) {
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -32,6 +34,7 @@ function Login({setUser}) {
     }
   return (
     <div className="login-container">
+        <Caro/>
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
@@ -54,6 +57,7 @@ function Login({setUser}) {
                 </div>
                 <button type="submit">Login</button>
             </form>
+            <button onClick={handleLogout}>logout</button>
         </div>
   )
 }

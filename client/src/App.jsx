@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import Login from './components/Login'
+import './App.css'
 import RootLayout from './layout/RootLayout';
 import {
   createBrowserRouter,
@@ -17,8 +17,9 @@ function App() {
     fetch('/api/check_session')
     .then(response => response.json())
     .then(data => {
-      console.log(data)
-      setUser(data)}
+      if (data.ok){
+        setUser(data)
+      }}
       )
   },[])
 
@@ -31,8 +32,8 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<RootLayout />}>
-        <Route index element={<Login handleLogout={handleLogout} />} />
+      <Route path="/" element={<RootLayout setUser={setUser} user={user}/>}>
+        <Route index element = {<Login setUser={setUser} handleLogout={handleLogout}/>}/>
       </Route>
     )
   )
