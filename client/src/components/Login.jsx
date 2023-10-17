@@ -1,6 +1,7 @@
 import {useState} from 'react'
 
-function Login({setUser}) {
+function Login({setUser,handleLogout}) {
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -54,6 +55,7 @@ function Login({setUser}) {
                 </div>
                 <button type="submit">Login</button>
             </form>
+            <button onClick={handleLogout}>logout</button>
         </div>
   )
 }
