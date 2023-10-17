@@ -13,9 +13,10 @@ class User( db.Model, SerializerMixin):
     username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String, nullable=False)
 
-    rsvps =db.relationship('rsvp', 'user')
-    event_hosts =db.relationship('event_hosts', 'user')
+    rsvps =db.relationship('RSVP', backref='user')
+    event_hosts =db.relationship('EventHosts', backref='user')
 
+#///////////////////////////////////////////////////////////////////////////////////
 
     @hybrid_property
     def password_hash(self):
@@ -51,7 +52,7 @@ class EventHosts(db.Model, SerializerMixin):
 class RSVP(db.Model, SerializerMixin):
     __tablename__ ="rsvp_table"
 
-    id = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
     event_id = db.Column(db.Integer, db.ForeignKey("event_table.id"))
     user_id = db.Column(db.Integer, db.ForeignKey("user_table.id"))
     name = db.Column(db.String)
@@ -70,7 +71,7 @@ class Event(db.Model, SerializerMixin):
     time = db.Column(db.Integer)
     description = db.Column(db.String)
 
-    rsvps =db.relationship('rsvp', 'event')
-    event_hosts =db.relationship('event_hosts', 'event')
+    rsvps =db.relationship('RSVP', backref='event')
+    event_hosts =db.relationship('EventHosts', backref='event')
 
 #///////////////////////////////////////////////////////////////////////////////////
