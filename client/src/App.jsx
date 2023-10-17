@@ -32,7 +32,7 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<RootLayout setUser={setUser} user={user}/>}>
+      <Route path="/" element={<RootLayout setUser={setUser} user={user} handleLogout={handleLogout}/>}>
         <Route index element = {<Login setUser={setUser} handleLogout={handleLogout}/>}/>
       </Route>
     )

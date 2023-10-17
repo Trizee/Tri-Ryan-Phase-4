@@ -34,7 +34,7 @@ const theme = createTheme({
     },
   });
 
-function Navbar({setUser, user}) {
+function Navbar({handleLogout, user }) {
 
     const [pages,setPages] = useState(['My Events', 'Calender', 'Featured'])
     const [settings,setSettings] = useState(['Profile', 'Create Event', 'Logout'])  
@@ -50,6 +50,21 @@ function Navbar({setUser, user}) {
         }
         console.log(user)
     },[user])
+
+    function settingOnClick(setting){
+        if(setting === 'Create Event'){
+            console.log('e')
+            setAnchorElUser(null);
+        }
+        else if (setting === 'Profile'){
+            console.log('profile')
+            setAnchorElUser(null);
+        }
+        else if(setting === 'Logout'){
+            handleLogout()
+            setAnchorElUser(null);
+        }
+    }
 
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -71,8 +86,9 @@ function Navbar({setUser, user}) {
   };
 
   return (
+    
     <ThemeProvider theme={theme}>
-    <AppBar position="absolute" color="primary">
+    <AppBar position="fixed" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           
@@ -191,7 +207,7 @@ function Navbar({setUser, user}) {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={()=>settingOnClick(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
