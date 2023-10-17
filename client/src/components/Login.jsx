@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import Caro from './Carousel';
 
 function Login({setUser,handleLogout}) {
 
@@ -33,6 +34,7 @@ function Login({setUser,handleLogout}) {
     }
   return (
     <div className="login-container">
+        <Caro/>
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
