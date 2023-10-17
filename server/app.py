@@ -18,6 +18,7 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 api = Api(app)
+app.secret_key = 'super secret key'
 
 #///////////////////////////////////////////////////////////////////////////////////
 
@@ -57,7 +58,7 @@ api.add_resource(Logout, '/logout')
 
 #///////////////////////////////////////////////////////////////////////////////////
 
-class User(Resource):
+class Users(Resource):
 
     def get(self):
         users = [user.to_dict() for user in User.query.all()]
@@ -68,35 +69,48 @@ class User(Resource):
         try:
             new_user = User(
                 username = data['username'],
-                password = data['password'])
+                password_hash = data['password'])
         except ValueError as e:
-            return make_response({"errors": str(e)}, 400)
+            return make_response({"errors": ["validation errors"]}, 400)
         db.session.add(new_user)
         db.session.commit()
-        return make_response(new_user.to_dict(),200)
+        return make_response(new_user.to_dict(),201)
     
-    def create(self, user_id):
-        user = User.query.get(user_id)
+    
+api.add_resource(Users, '/users')
+# //////////////////////////////////////////////////////////////////////////////////
+class UserByID(Resource):
+
+    def get(self,id):
+        user = User.query.filter_by(id = id).first()
+        if not user:
+            return make_response({"errors":"User not found"},404)
+        return make_response(user.to_dict(),200)
+    
+    def patch(self, id):
+        user = User.query.filter_by(id = id).first()
         if user:
             data = request.get_json()
             user.username = data['username']
             user.password = data['password']
+            db.session.add(user)
             db.session.commit()
             return make_response(user.to_dict(), 200)
         return make_response({'message': 'User not found'}, 404)
     
-    def delete(self,user_id):
-        user = User.query.get(user_id)
+    def delete(self,id):
+        user = User.query.filter_by(id = id).first()
         if user:
             db.session.delete(user)
             db.session.commit()
             return make_response({'message': 'User deleted'}, 204)
         return make_response({'message': 'User not found'}, 404)
-api.add_resource(User, '/users')
+
+api.add_resource(UserByID,'/users/<int:id>')
             
 #///////////////////////////////////////////////////////////////////////////////////
 
-class Event(Resource):
+class Events(Resource):
 
     def get(self):
         events = [event.to_dict() for event in Event.query.all()]
@@ -115,30 +129,43 @@ class Event(Resource):
         db.session.commit()
         return make_response(new_event.to_dict(), 200)
     
-    def create(self, event_id):
-        event = Event.query.get(event_id)
+    
+    
+api.add_resource(Events, '/events')
+#///////////////////////////////////////////////////////////////////////////////////
+class EventsByID(Resource):
+
+    def get(self,id):
+        event = Event.query.filter_by(id = id).first
+        if not event:
+            return make_response({"errors":"User not found"},404)
+        return make_response(event.to_dict(),200)
+    
+    def patch(self, id):
+        event = Event.query.filter_by(id = id).first()
         if event:
             data = request.get_json()
             event.location = data['location']
             event.time = data['time']
             event.description = data['description']
+            db.session.add(event)
             db.session.commit()
             return make_response(event.to_dict(), 200)
-        return make_response({'message': 'Event not found'}, 404)
+        return make_response({'message': 'User not found'}, 404)
     
-    def delete(self, event_id):
-        event = Event.query.get(event_id)
+    def delete(self,id):
+        event = Event.query.filter_by(id = id).first()
         if event:
             db.session.delete(event)
             db.session.commit()
-            return make_response({'message': 'Event deleted'}, 204)
-        return make_response({'message': 'Event not found'}, 4044)
-    
-api.add_resource(Event, '/events')
+            return make_response({'message': 'User deleted'}, 204)
+        return make_response({'message': 'User not found'}, 404)
+
+api.add_resource(EventsByID,'/events/<int:id>')
 
 #///////////////////////////////////////////////////////////////////////////////////
 
-class EventHosts(Resource):
+class EventHostss(Resource):
 
     def get(self):
         event_hosts = [event_host.to_dict() for event_host in EventHosts.query.all()]
@@ -158,31 +185,45 @@ class EventHosts(Resource):
         db.session.commit()
         return make_response(new_event_host.to_dict(), 200)
 
-    def create(self, event_host_id):
-        event_host = EventHosts.query.get(event_host_id)
+
+api.add_resource(EventHostss, '/event_hosts')
+
+#///////////////////////////////////////////////////////////////////////////////////
+
+class EventHostByID(Resource):
+
+    def get(self,id):
+        event_host = EventHosts.filter_by(id = id).first()
+        if not event_host:
+            return make_response({"errors":"User not found"},404)
+        return make_response(event_host.to_dict(),200)
+
+    def patch(self,id):
+        event_host = EventHosts.filter_by(id = id).first()
         if event_host:
             data = request.get_json()
             event_host.user_id = data['user_id']
             event_host.event_id = data['event_id']
             event_host.created_at = data['created_at']
             event_host.updated_at = data['updated_at']
+            db.session.add(event_host)
             db.session.commit()
             return make_response(event_host.to_dict(), 200)
         return make_response({"message": "Event Host not found"}, 404)
 
-    def delete(self, event_host_id):
-        event_host = EventHosts.query.get(event_host_id)
+    def delete(self,id):
+        event_host = EventHosts.filter_by(id = id).first()
         if event_host:
             db.session.delete(event_host)
             db.session.commit()
             return make_response({"message": "Event Host deleted"}, 204)
         return make_response({"message": "Event Host not found"}, 404)
-
-api.add_resource(EventHosts, '/event_hosts')
+    
+api.add_resource(EventHostByID, '/event_hosts/<int:id>')
 
 #///////////////////////////////////////////////////////////////////////////////////
 
-class RSVP(Resource):
+class RSVPs(Resource):
     def get(self):
         rsvps = [rsvp.to_dict() for rsvp in RSVP.query.all()]
         return make_response(rsvps, 200)
@@ -202,8 +243,13 @@ class RSVP(Resource):
         db.session.commit()
         return make_response(new_rsvp.to_dict(), 200)
 
-    def create(self, rsvp_id):
-        rsvp = RSVP.query.get(rsvp_id)
+api.add_resource(RSVPs, '/rsvps')
+
+#///////////////////////////////////////////////////////////////////////////////////
+class RSVPbyID(Resource):
+
+    def patch(self,id):
+        rsvp = RSVP.query.filter_by(id = id).first()
         if rsvp:
             data = request.get_json()
             rsvp.event_id = data['event_id']
@@ -211,22 +257,24 @@ class RSVP(Resource):
             rsvp.name = data['name']
             rsvp.phone = data['phone']
             rsvp.status = data['status']
+            db.session.add(rsvp)
             db.session.commit()
             return make_response(rsvp.to_dict(), 200)
         return make_response({"message": "RSVP not found"}, 404)
 
-    def delete(self, rsvp_id):
-        rsvp = RSVP.query.get(rsvp_id)
+    def delete(self,id):
+        rsvp = RSVP.query.filter_by(id = id).first()
         if rsvp:
             db.session.delete(rsvp)
             db.session.commit()
             return make_response({"message": "RSVP deleted"}, 204)
         return make_response({"message": "RSVP not found"}, 404)
 
-api.add_resource(RSVP, '/rsvps')
+api.add_resource(RSVPbyID, '/rsvps/<int:id>') 
 
 #///////////////////////////////////////////////////////////////////////////////////
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
+    
 
