@@ -97,6 +97,9 @@ function Navbar({handleLogout, user }) {
         else if(pages === 'Featured'){
           navigate('/featured')
         }
+        else if(pages === 'Calender'){
+          navigate('/calender')
+        }
     }
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
