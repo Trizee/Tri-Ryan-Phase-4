@@ -12,6 +12,8 @@ import {
 import Login from './components/Login/Login';
 import Signup from './components/Login/Signup';
 import Caro from './components/Carousel';
+import Event from './components/Pages/MyEvents';
+import Featured from './components/Pages/Featured';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -20,7 +22,7 @@ function App() {
     fetch('/api/check_session')
     .then(response => response.json())
     .then(data => {
-      if (data.ok){
+      if (data.username){
         setUser(data)
       }}
       )
@@ -38,7 +40,9 @@ function App() {
       <Route path="/" element={<RootLayout setUser={setUser} user={user} handleLogout={handleLogout}/>}>
         <Route index element = {<Caro/>}/>
         <Route path='/login' element={<Login setUser={setUser}/>} />
-        <Route path='/signup' element={<Signup setUser={setUser}/>} />
+        <Route path='/signup' element={<Signup/>} />
+        <Route path='/event' element={<Event/>}/>
+        <Route path='/featured' element={<Featured/>}/>
       </Route>
     )
   )

@@ -68,6 +68,7 @@ class Event(db.Model, SerializerMixin):
     __tablename__ ="event_table"
 
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable = False)
     location = db.Column(db.String)
     time = db.Column(db.Integer)
     description = db.Column(db.String)

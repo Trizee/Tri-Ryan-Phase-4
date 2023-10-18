@@ -16,6 +16,14 @@ import SvgIcon from '@mui/material/SvgIcon'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
+// Import for backdrop dialog
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 const theme = createTheme({
     palette: {
@@ -41,6 +49,16 @@ function Navbar({handleLogout, user }) {
     const [pages,setPages] = useState(['My Events', 'Calender', 'Featured'])
     const [settings,setSettings] = useState(['Profile', 'Create Event', 'Logout'])  
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
     useEffect(()=>{
         if (!user){
             setPages(['Create Account','Login'])
@@ -50,16 +68,14 @@ function Navbar({handleLogout, user }) {
             setPages(['My Events', 'Calender', 'Featured'])
             setSettings(['Profile', 'Create Event', 'Logout'])
         }
-        console.log(user)
     },[user])
 
     function settingOnClick(setting){
         if(setting === 'Create Event'){
-            console.log('e')
-            setAnchorElUser(null);
+          handleClickOpen()
+          setAnchorElUser(null);
         }
         else if (setting === 'Profile'){
-            console.log('profile')
             setAnchorElUser(null);
         }
         else if(setting === 'Logout'){
@@ -74,6 +90,12 @@ function Navbar({handleLogout, user }) {
         }
         else if (pages === 'Login'){
             navigate('/login')
+        }
+        else if(pages === 'My Events'){
+          navigate('/event')
+        }
+        else if(pages === 'Featured'){
+          navigate('/featured')
         }
     }
 
@@ -98,6 +120,51 @@ function Navbar({handleLogout, user }) {
   return (
     
     <ThemeProvider theme={theme}>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle style={{textAlign:'center'}}>🎉Create Your Own Event🎉</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Party Name"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="location"
+            label="Location"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="time"
+            label="             "
+            type="datetime-local"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="description"
+            label="Description"
+            type="text"
+            fullWidth
+            variant="standard"
+            multiline='true'
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Let's Party</Button>
+        </DialogActions>
+      </Dialog>
     <AppBar position="fixed" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -106,7 +173,7 @@ function Navbar({handleLogout, user }) {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={()=>{navigate('/')}}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex'},
@@ -165,7 +232,7 @@ function Navbar({handleLogout, user }) {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={()=>navigate('/')}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
