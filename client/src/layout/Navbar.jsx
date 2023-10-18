@@ -120,10 +120,49 @@ function Navbar({handleLogout, user }) {
     setAnchorElUser(null);
   };
 
+//////////////////////////////////////////////////////////////////////////////
+
+
+    const [name, setName] = useState('');
+    const [location, setLocation] = useState('');
+    const [time, setTime] = useState('');
+    const [description, setDescription] = useState('');
+
+    function handleSubmit(e){
+      e.preventDefault()
+      fetch("/api/events",{
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              name,
+              location,
+              time,
+              description,
+          })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error("Network response error");
+          }
+          return response.json();
+      })
+      .then(data => {
+        console.log(data)
+        handleClose()
+      })
+      .catch(error => {
+          console.log("error", error.message);
+      });
+  }
+
+//////////////////////////////////////////////////////////////////////////////
+
   return (
     
     <ThemeProvider theme={theme}>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} >
         <DialogTitle style={{textAlign:'center'}}>🎉Create Your Own Event🎉</DialogTitle>
         <DialogContent>
           <TextField
@@ -134,6 +173,8 @@ function Navbar({handleLogout, user }) {
             type="text"
             fullWidth
             variant="standard"
+            onChange={(e)=>setName(e.target.value)}
+
           />
           <TextField
             autoFocus
@@ -143,6 +184,8 @@ function Navbar({handleLogout, user }) {
             type="text"
             fullWidth
             variant="standard"
+            onChange={(e)=>setLocation(e.target.value)}
+
           />
           <TextField
             autoFocus
@@ -152,6 +195,8 @@ function Navbar({handleLogout, user }) {
             type="datetime-local"
             fullWidth
             variant="standard"
+            onChange={(e)=>setTime(e.target.value)}
+
           />
           <TextField
             autoFocus
@@ -161,11 +206,12 @@ function Navbar({handleLogout, user }) {
             type="text"
             fullWidth
             variant="standard"
-            multiline='true'
+            onChange={(e)=>setDescription(e.target.value)}
+
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Let's Party</Button>
+          <Button onClick={(e)=>handleSubmit(e)}>Let's Party</Button>
         </DialogActions>
       </Dialog>
     <AppBar position="fixed" color="primary">
@@ -299,4 +345,5 @@ function Navbar({handleLogout, user }) {
     </ThemeProvider>
   );
 }
-export default Navbar;
+
+export default Navbar
