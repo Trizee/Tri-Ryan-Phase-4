@@ -40,7 +40,7 @@ function App() {
       <Route path="/" element={<RootLayout setUser={setUser} user={user} handleLogout={handleLogout}/>}>
         <Route index element = {<Caro/>}/>
         <Route path='/login' element={<Login setUser={setUser}/>} />
-        <Route path='/signup' element={<Signup/>} />
+        <Route path='/signup' element={<Signup setUser={setUser}/>} />
         <Route path='/event' element={<Event/>}/>
         <Route path='/featured' element={<Featured/>}/>
       </Route>
