@@ -122,6 +122,7 @@ class Events(Resource):
         data = request.get_json()
         try:
             new_event = Event(
+                name = data['name'],
                 location = data['location'],
                 time = data['time'],
                 description = data['description'])
