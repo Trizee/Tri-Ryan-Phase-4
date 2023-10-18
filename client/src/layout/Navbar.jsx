@@ -122,7 +122,6 @@ function Navbar({handleLogout, user }) {
 
 //////////////////////////////////////////////////////////////////////////////
 
-
     const [name, setName] = useState('');
     const [location, setLocation] = useState('');
     const [time, setTime] = useState('');
@@ -149,8 +148,34 @@ function Navbar({handleLogout, user }) {
           return response.json();
       })
       .then(data => {
-        console.log(data)
+        setEvent(data)
+        postEventHost(data)
         handleClose()
+      })
+      .catch(error => {
+          console.log("error", error.message);
+      });
+  }
+
+  function postEventHost(data){
+      fetch("/api/event_hosts",{
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              user_id: user.id,
+              event_id: data.id
+          })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error("Network response error");
+          }
+          return response.json();
+      })
+      .then(data => {
+        console.log(data)
       })
       .catch(error => {
           console.log("error", error.message);
