@@ -10,19 +10,41 @@ import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import './Signup.css'
 import { useNavigate } from "react-router-dom";
+import {useState} from 'react'
 
-function Signup() {
+function Signup({setUser}) {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  function handleSubmit(e){
+    e.preventDefault()
+    fetch("/api/users",{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username,
+            password
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response error");
+        }
+        return response.json();
+    })
+    .then(data => {
+      setUser(data)
+        navigate('/')
+    })
+    .catch(error => {
+        console.log("error", error.message);
+    });
+}
 
   const navigate = useNavigate()
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
 
         return (
           <Container component="main" sx={{
@@ -75,6 +97,8 @@ function Signup() {
                         name="username"
                         autoComplete="username"
                         autoFocus
+                        onChange={(e)=>setUsername(e.target.value)}
+
                       />
                       <TextField
                         margin="normal"
@@ -85,13 +109,15 @@ function Signup() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={(e)=>setPassword(e.target.value)}
+
                       />
                       <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
-                      >
+                        >
                         Sign Up
                       </Button>
                       <Grid container display={'flex'} justifyContent={'space-between'} margin={'0 auto'}>
