@@ -20,7 +20,7 @@ function App() {
     fetch('/api/check_session')
     .then(response => response.json())
     .then(data => {
-      if (data.ok){
+      if (data.username){
         setUser(data)
       }}
       )
