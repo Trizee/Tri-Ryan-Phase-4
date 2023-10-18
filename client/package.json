@@ -21,6 +21,7 @@
     "mdb-react-ui-kit": "^6.3.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0",
+    "react-calendar": "^4.6.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "styled-components": "^6.1.0"

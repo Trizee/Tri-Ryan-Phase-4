@@ -14,6 +14,7 @@ import Signup from './components/Login/Signup';
 import Caro from './components/Carousel';
 import Event from './components/Pages/MyEvents';
 import Featured from './components/Pages/Featured';
+import Calendar from './components/Pages/Calender';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -43,6 +44,7 @@ function App() {
         <Route path='/signup' element={<Signup setUser={setUser}/>} />
         <Route path='/event' element={<Event/>}/>
         <Route path='/featured' element={<Featured/>}/>
+        <Route path='/calender' element={<Calendar />}/>
       </Route>
     )
   )
