@@ -7,8 +7,7 @@ export default function RootLayout({setUser, user, handleLogout}) {
     return (
         <div>
             <header>
-                {/* {location.pathname === "/"? null :<Navbar setUser={setUser} user={user} handleLogout={handleLogout}/>} */}
-                <Navbar setUser={setUser} user={user} handleLogout={handleLogout}/>
+                {location.pathname === "/login" || location.pathname === "/signup"? null :<Navbar setUser={setUser} user={user} handleLogout={handleLogout}/>}
             </header>
             <main>
                 <Outlet />

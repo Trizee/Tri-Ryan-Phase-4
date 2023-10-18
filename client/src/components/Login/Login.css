@@ -1,0 +1,7 @@
+body {
+    background: linear-gradient(white, #2e9bd6);
+    height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: linear 2s ease;
+}

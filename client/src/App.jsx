@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Login from './components/Login'
 import './App.css'
 import RootLayout from './layout/RootLayout';
 import {
@@ -9,6 +8,10 @@ import {
   Route,
   Link,
 } from "react-router-dom";
+
+import Login from './components/Login/Login';
+import Signup from './components/Login/Signup';
+import Caro from './components/Carousel';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -33,7 +36,9 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout setUser={setUser} user={user} handleLogout={handleLogout}/>}>
-        <Route index element = {<Login setUser={setUser} handleLogout={handleLogout}/>}/>
+        <Route index element = {<Caro/>}/>
+        <Route path='/login' element={<Login setUser={setUser}/>} />
+        <Route path='/signup' element={<Signup/>} />
       </Route>
     )
   )

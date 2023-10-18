@@ -15,6 +15,7 @@ class User( db.Model, SerializerMixin):
 
     rsvps =db.relationship('RSVP', backref='user')
     event_hosts =db.relationship('EventHosts', backref='user')
+    comments =db.relationship('Comments', backref='user')
 
 #///////////////////////////////////////////////////////////////////////////////////
 
@@ -74,4 +75,16 @@ class Event(db.Model, SerializerMixin):
     rsvps =db.relationship('RSVP', backref='event')
     event_hosts =db.relationship('EventHosts', backref='event')
 
+    comments =db.relationship('Comments', backref='event')
+
 #///////////////////////////////////////////////////////////////////////////////////
+
+class Comments(db.Model, SerializerMixin):
+    tablename = 'comments_table'
+
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String)
+    user_id = db.Column(db.Integer, db.ForeignKey('user_table.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('event_table.id'))
+
+    serialize_rules=('-user','-event')
