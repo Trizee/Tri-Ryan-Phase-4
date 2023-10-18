@@ -91,6 +91,12 @@ function Navbar({handleLogout, user }) {
         else if (pages === 'Login'){
             navigate('/login')
         }
+        else if(pages === 'My Events'){
+          navigate('/event')
+        }
+        else if(pages === 'Featured'){
+          navigate('/featured')
+        }
     }
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
