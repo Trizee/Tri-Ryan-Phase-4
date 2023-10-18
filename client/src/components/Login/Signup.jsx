@@ -37,7 +37,7 @@ function Signup({setUser}) {
     })
     .then(data => {
       setUser(data)
-        navigate('/')
+      navigate('/')
     })
     .catch(error => {
         console.log("error", error.message);
