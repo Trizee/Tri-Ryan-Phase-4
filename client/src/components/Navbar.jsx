@@ -12,9 +12,9 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import SvgIcon from '@mui/material/SvgIcon'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 
 const theme = createTheme({
@@ -35,6 +35,8 @@ const theme = createTheme({
   });
 
 function Navbar({handleLogout, user }) {
+
+    const navigate = useNavigate()
 
     const [pages,setPages] = useState(['My Events', 'Calender', 'Featured'])
     const [settings,setSettings] = useState(['Profile', 'Create Event', 'Logout'])  
@@ -66,6 +68,14 @@ function Navbar({handleLogout, user }) {
         }
     }
 
+    function pagesOnClick(pages){
+        if( pages === 'Create Account'){
+            navigate('/signup')
+        }
+        else if (pages === 'Login'){
+            navigate('/login')
+        }
+    }
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -144,7 +154,7 @@ function Navbar({handleLogout, user }) {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={()=>pagesOnClick(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -176,7 +186,7 @@ function Navbar({handleLogout, user }) {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={()=>pagesOnClick(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}

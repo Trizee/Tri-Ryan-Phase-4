@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import Caro from '../Carousel';
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -11,9 +11,10 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
-import styles from './Login.css'
 
 function Login({setUser}) {
+
+    const navigate = useNavigate()
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -38,7 +39,6 @@ function Login({setUser}) {
         })
         .then(data => {
             setUser(data)
-            console.log(data);
         })
         .catch(error => {
             console.log("error", error.message);
@@ -50,7 +50,6 @@ function Login({setUser}) {
             display: 'flex',
             justifyContent:'center',
             alignItems:'center',
-            transition: 'linear 2s'
             }}>
             <Box
               sx={{
@@ -133,9 +132,12 @@ function Login({setUser}) {
                       >
                         Sign In
                       </Button>
-                      <Grid container>
-                        <Grid item sx={{float:'right'}}>
-                          <Button>Sign Up</Button>
+                      <Grid container display={'flex'} justifyContent={'space-between'} margin={'0 auto'}>
+                        <Grid item>
+                          <Button onClick={()=>navigate('/signup')}>Dont have account?</Button>
+                        </Grid>
+                        <Grid item>
+                          <Button onClick={()=>navigate('/')}>Continue As Guest</Button>
                         </Grid>
                       </Grid>
                     </Box>

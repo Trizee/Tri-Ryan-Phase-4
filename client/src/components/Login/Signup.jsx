@@ -30,7 +30,6 @@ function Signup() {
             display: 'flex',
             justifyContent:'center',
             alignItems:'center',
-            transition: 'linear 2s'
             }}>
             <Box
               sx={{
@@ -39,6 +38,7 @@ function Signup() {
               }}
             >
               <Grid container>
+              <CssBaseline />
               <Grid
                   item
                   xs={12}
@@ -86,35 +86,33 @@ function Signup() {
                         id="password"
                         autoComplete="current-password"
                       />
-                      <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                      />
                       <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                       >
-                        Sign In
+                        Sign Up
                       </Button>
-                      <Grid container>
+                      <Grid container display={'flex'} justifyContent={'space-between'} margin={'0 auto'}>
+                        <Grid item > 
+                          <Button onClick={()=>{navigate('/login')}}>Have An account?</Button>
+                        </Grid>
                         <Grid item>
-                          <Button onClick={()=>{navigate('/login')}}>Login?</Button>
+                          <Button onClick={()=>{navigate('/')}}>Continue As Guest</Button>
                         </Grid>
                       </Grid>
+                      
                     </Box>
                   </Box>
                 </Grid>
-              </Grid>
-                <CssBaseline />
                 <Grid
                   item
                   xs={false}
                   sm={4}
                   md={7}
                   sx={{
-                    backgroundImage: "url(https://t4.ftcdn.net/jpg/01/20/28/25/360_F_120282530_gMCruc8XX2mwf5YtODLV2O1TGHzu4CAb.jpg)",
+                    backgroundImage: "url(https://www.fastneonsigns.com/cdn/shop/products/purple_de7454f7-a178-4c8d-a71e-a8bb5c022027.jpg?v=1656660698&width=2000)",
                     backgroundRepeat: "no-repeat",
                     backgroundColor: (t) =>
                       t.palette.mode === "light"
@@ -124,6 +122,7 @@ function Signup() {
                     backgroundPosition: "center",
                   }}
                 />
+              </Grid>
             </Box>
           </Container>
         );
