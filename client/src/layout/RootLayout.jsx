@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import Navbar from './Navbar';
 
 export default function RootLayout({setUser, user, handleLogout}) {
     let location = useLocation()

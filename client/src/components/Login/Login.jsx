@@ -39,6 +39,7 @@ function Login({setUser}) {
         })
         .then(data => {
             setUser(data)
+            navigate('/')
         })
         .catch(error => {
             console.log("error", error.message);

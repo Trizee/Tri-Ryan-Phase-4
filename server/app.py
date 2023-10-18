@@ -1,4 +1,4 @@
-from models import db, User, EventHosts, RSVP, Event
+from models import db, User, EventHosts, RSVP, Event, Comments
 from flask_restful import Api, Resource
 from flask_migrate import Migrate
 from flask import Flask, make_response, jsonify, request, session
@@ -273,6 +273,58 @@ class RSVPbyID(Resource):
 api.add_resource(RSVPbyID, '/rsvps/<int:id>') 
 
 #///////////////////////////////////////////////////////////////////////////////////
+
+class Comment(Resource):
+    def get(self):
+        comments = [comment.to_dict() for comment in Comments.query.all()]
+        return make_response(comments, 200)
+
+    def post(self):
+        data = request.get_json()
+        try:
+            new_comment = Comments(
+                text=data['text'],
+                user_id=data['user_id'],
+                event_id=data['event_id'])
+        except ValueError as e:
+            return make_response({"errors": str(e)}, 400)
+        db.session.add(new_comment)
+        db.session.commit()
+        return make_response(new_comment.to_dict(), 200)
+    
+#///////////////////////////////////////////////////////////////////////////////////
+
+class CommentById(Resource):
+
+    def get(self,id):
+        comment_id = Comments.filter_by(id = id).first()
+        if not comment_id:
+            return make_response({"errors":"Comment by ID not found"},404)
+        return make_response(comment_id.to_dict(),200)
+
+    def patch(self,id):
+        comment_id = Comments.filter_by(id = id).first()
+        if comment_id:
+            data = request.get_json()
+            comment_id.text = data['text']
+            comment_id.user_id = data['user_id']
+            comment_id.event_id = data['event_id']
+            db.session.add(comment_id)
+            db.session.commit()
+            return make_response(comment_id.to_dict(), 200)
+        return make_response({"message": "Comment by ID not found"}, 404)
+
+    def delete(self,id):
+            comment_id = Comments.filter_by(id = id).first()
+            if comment_id:
+                db.session.delete(comment_id)
+                db.session.commit()
+                return make_response({"message": "Comment by ID deleted"}, 204)
+            return make_response({"message": "Comment by ID not found"}, 404)
+
+
+api.add_resource(CommentById, '/comments/<int:id>')
+api.add_resource(Comment, '/comments')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
