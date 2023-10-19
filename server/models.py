@@ -72,6 +72,7 @@ class Event(db.Model, SerializerMixin):
     location = db.Column(db.String)
     time = db.Column(db.Integer)
     description = db.Column(db.String)
+    picture = db.Column(db.String)
 
     rsvps =db.relationship('RSVP', backref='event')
     event_hosts =db.relationship('EventHosts', backref='event')

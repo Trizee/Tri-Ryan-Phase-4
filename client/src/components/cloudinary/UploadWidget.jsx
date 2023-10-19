@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Container, SvgIcon } from "@mui/material";
 
-function UploadWidget(){
+function UploadWidget({setPicture}){
 
     const cloudinaryRef = useRef()
     const widgetRef = useRef()
@@ -18,6 +18,7 @@ function UploadWidget(){
             if (result.event == "success") {
                 console.log(result)
                 console.log(result.info.url)
+                setPicture(result.info.url)
             }
             else {
                 console.log(result)

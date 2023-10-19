@@ -125,7 +125,8 @@ class Events(Resource):
                 name = data['name'],
                 location = data['location'],
                 time = data['time'],
-                description = data['description'])
+                description = data['description'],
+                picture = data['picture'])
         except ValueError as e:
             return make_response({'errors': str(e)}, 400)
         db.session.add(new_event)

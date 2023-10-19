@@ -125,6 +125,7 @@ function Navbar({handleLogout, user }) {
     const [location, setLocation] = useState('');
     const [time, setTime] = useState('');
     const [description, setDescription] = useState('');
+    const [picture,setPicture] = useState('')
 
     function handleSubmit(e){
       e.preventDefault()
@@ -138,6 +139,7 @@ function Navbar({handleLogout, user }) {
               location,
               time,
               description,
+              picture
           })
       })
       .then(response => {
@@ -232,7 +234,7 @@ function Navbar({handleLogout, user }) {
             onChange={(e)=>setDescription(e.target.value)}
 
           />
-          <UploadWidget/>
+          <UploadWidget setPicture={setPicture}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={(e)=>handleSubmit(e)}>Let's Party</Button>
