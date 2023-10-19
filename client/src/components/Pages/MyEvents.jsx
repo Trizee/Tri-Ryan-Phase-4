@@ -22,7 +22,6 @@ function Event({event,setEvent}){
       
         <Grid container spacing={2}
         style={{
-            height: '90vh',
             display: 'flex',
             justifyContent:'center',
             alignItems:'center',

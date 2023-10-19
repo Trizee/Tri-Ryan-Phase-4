@@ -188,7 +188,7 @@ function Navbar({handleLogout, user, event, setEvent}) {
   return (
     
     <ThemeProvider theme={theme}>
-      <Dialog open={open} onClose={handleClose} >
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{textAlign:'center'}}>🎉Create Your Own Event🎉</DialogTitle>
         <DialogContent>
           <TextField

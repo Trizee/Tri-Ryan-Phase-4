@@ -147,15 +147,20 @@ class EventsByID(Resource):
     
     def patch(self, id):
         event = Event.query.filter_by(id = id).first()
+
+        if not event:
+            return make_response({'message': 'User not found'}, 404)
+
         if event:
             data = request.get_json()
             event.location = data['location']
             event.time = data['time']
             event.description = data['description']
+            event.picture = data['picture']
             db.session.add(event)
             db.session.commit()
-            return make_response(event.to_dict(), 200)
-        return make_response({'message': 'User not found'}, 404)
+        return event.to_dict(), 200
+        
     
     def delete(self,id):
         event = Event.query.filter_by(id = id).first()
