@@ -65,7 +65,7 @@ function Navbar({handleLogout, user }) {
             setSettings([])
         }
         else{
-            setPages(['My Events', 'Calender', 'Featured'])
+            setPages(['My Events', 'Featured'])
             setSettings(['Profile', 'Create Event', 'Logout'])
         }
     },[user])
@@ -96,9 +96,6 @@ function Navbar({handleLogout, user }) {
         }
         else if(pages === 'Featured'){
           navigate('/featured')
-        }
-        else if(pages === 'Calender'){
-          navigate('/calender')
         }
     }
 
@@ -148,7 +145,6 @@ function Navbar({handleLogout, user }) {
           return response.json();
       })
       .then(data => {
-        setEvent(data)
         postEventHost(data)
         handleClose()
       })

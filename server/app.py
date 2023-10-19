@@ -179,9 +179,7 @@ class EventHostss(Resource):
         try:
             new_event_host = EventHosts(
                 user_id=data['user_id'],
-                event_id=data['event_id'],
-                created_at=data['created_at'],
-                updated_at=data['updated_at'])
+                event_id=data['event_id'],)
         except ValueError as e:
             return make_response({"errors": str(e)}, 400)
         db.session.add(new_event_host)
@@ -207,8 +205,6 @@ class EventHostByID(Resource):
             data = request.get_json()
             event_host.user_id = data['user_id']
             event_host.event_id = data['event_id']
-            event_host.created_at = data['created_at']
-            event_host.updated_at = data['updated_at']
             db.session.add(event_host)
             db.session.commit()
             return make_response(event_host.to_dict(), 200)
