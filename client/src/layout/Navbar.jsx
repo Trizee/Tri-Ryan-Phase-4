@@ -24,6 +24,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import UploadWidget from '../components/cloudinary/UploadWidget';
+
 
 const theme = createTheme({
     palette: {
@@ -230,6 +232,7 @@ function Navbar({handleLogout, user }) {
             onChange={(e)=>setDescription(e.target.value)}
 
           />
+          <UploadWidget/>
         </DialogContent>
         <DialogActions>
           <Button onClick={(e)=>handleSubmit(e)}>Let's Party</Button>
