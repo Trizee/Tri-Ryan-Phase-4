@@ -33,7 +33,7 @@ function Event({event,setEvent}){
             justifyContent:'center',
             alignItems:'center',
             padding:'50px 50px 50px 50px',
-            marginTop:'50px'
+            marginTop:'50px',
         }}>
             {eventList}
         </Grid>
