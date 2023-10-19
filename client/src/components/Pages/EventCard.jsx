@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { useState,useEffect } from 'react';
+import { useState,useEffect} from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Box, Grid } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -17,6 +18,8 @@ import UploadWidget from '../cloudinary/UploadWidget';
 
 
 function EventCard({events,deleteEvent}) {
+
+  const location2 = useLocation()
 
   const [even,setEven] = useState(events)
   const [name, setName] = useState(even.name);
@@ -67,7 +70,6 @@ function EventCard({events,deleteEvent}) {
     }
 
 
-  console.log(even)
   return (
     <>
     <Dialog open={open} onClose={handleClose}>
@@ -127,7 +129,7 @@ function EventCard({events,deleteEvent}) {
       <Dialog open={open1} onClose={handleClose1}>
           <DialogTitle style={{textAlign:'center'}}><strong>{even.name} Event</strong></DialogTitle>
           <DialogContent>
-            <img src={even.picture} style={{width:'400px',height:'300px'}}/>
+            <img src={even.picture} style={{width:'300px',height:'250px'}}/>
             <p style={{paddingTop:'15px'}}><strong>Location</strong></p>
             <p>{even.location}</p>
             <p><strong>Time</strong></p>
@@ -170,12 +172,23 @@ function EventCard({events,deleteEvent}) {
         </CardContent>
       </CardActionArea>
       <CardActions>
+        {
+          location2.pathname !== '/event' ?
+          <>
+        <Button size="small" color="primary">
+          RSVP
+        </Button>
+          </>
+          :
+          <>
         <Button size="small" color="primary" onClick={()=>deleteEvent(events.id)}>
           Delete
         </Button>
         <Button size="small" color="primary" onClick={handleClickOpen}>
           Edit
         </Button>
+        </>
+        }
       </CardActions>
     </Card>
     </Grid>

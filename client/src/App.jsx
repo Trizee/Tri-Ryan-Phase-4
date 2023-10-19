@@ -15,6 +15,7 @@ import Caro from './components/Carousel';
 import Event from './components/Pages/MyEvents';
 import Featured from './components/Pages/Featured';
 import Landing from './components/Pages/Landing';
+import AllEvents from './components/Pages/AllEvents';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -52,6 +53,7 @@ function App() {
         <Route path='/signup' element={<Signup setUser={setUser}/>} />
         <Route path='/event' element={<Event setUser={setUser} event={event} setEvent={setEvent}/>}/>
         <Route path='/featured' element={<Featured/>}/>
+        <Route path='/allevents' element={<AllEvents/>}/>
       </Route>
     )
   )

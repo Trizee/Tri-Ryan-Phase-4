@@ -10,8 +10,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://github.com/Trizee/Tri-Ryan-Phase-4" target='_blank'> 
+        PlanIT
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -69,13 +69,13 @@ export default function Footer() {
         >
           <Container>
             <Typography variant="body1" sx={{ color: '#ffffff' }}> {/* Change text color to white */}
-              My sticky footer can be found here.
+            PlannIT
             </Typography>
             <Typography variant="body2" sx={{ color: '#ffffff' }}> {/* Change text color to white */}
-              Some additional information here.
+            Plan your events seamlessly with Plannit.
             </Typography>
             <Typography variant="body2" sx={{ color: '#ffffff' }}> {/* Change text color to white */}
-              Contact us: example@example.com
+              Contact us: trihoang09@gmail.com // ryan@web.com
             </Typography>
             <Copyright />
           </Container>

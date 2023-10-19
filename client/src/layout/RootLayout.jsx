@@ -4,7 +4,6 @@ import Footer from './Footer';
 
 export default function RootLayout({setUser, user, handleLogout,event, setEvent}) {
     let location = useLocation()
-    console.log(location)
     return (
         <div>
             <header>
