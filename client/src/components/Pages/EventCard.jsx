@@ -6,8 +6,9 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Box, Grid } from '@mui/material';
 
 
-function EventCard({events}) {
+function EventCard({events,deleteEvent}) {
 
+   
   return (
     <>
     <Grid item s={12} sm={6} md={4}>
@@ -44,7 +45,7 @@ function EventCard({events}) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={()=>deleteEvent(events.id)}>
           Delete
         </Button>
         <Button size="small" color="primary">

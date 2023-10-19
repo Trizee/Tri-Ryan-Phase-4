@@ -44,7 +44,7 @@ const theme = createTheme({
     },
   });
 
-function Navbar({handleLogout, user }) {
+function Navbar({handleLogout, user, event, setEvent}) {
 
     const navigate = useNavigate()
 
@@ -149,6 +149,7 @@ function Navbar({handleLogout, user }) {
           return response.json();
       })
       .then(data => {
+        setEvent([...event,data])
         postEventHost(data)
         handleClose()
       })

@@ -162,7 +162,7 @@ class EventsByID(Resource):
         if event:
             db.session.delete(event)
             db.session.commit()
-            return make_response({'message': 'User deleted'}, 204)
+            return make_response({}, 204)
         return make_response({'message': 'User not found'}, 404)
 
 api.add_resource(EventsByID,'/events/<int:id>')
