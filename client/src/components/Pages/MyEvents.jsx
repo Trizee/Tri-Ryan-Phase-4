@@ -1,11 +1,5 @@
-import { useEffect,useState } from "react"
 import EventCard from "./EventCard"
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import { Grid } from "@mui/material";
-import Typography from '@mui/material/Typography';
-
 
 function Event({event,setEvent}){
     

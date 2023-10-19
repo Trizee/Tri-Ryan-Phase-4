@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
+import Footer from './Footer';
 
 export default function RootLayout({setUser, user, handleLogout,event, setEvent}) {
     let location = useLocation()
@@ -12,6 +13,9 @@ export default function RootLayout({setUser, user, handleLogout,event, setEvent}
             <main>
                 <Outlet />
             </main>
+            <footer>
+            {location.pathname === "/login" || location.pathname === "/signup"? null :<Footer />}
+            </footer>
         </div>
     );
 }
