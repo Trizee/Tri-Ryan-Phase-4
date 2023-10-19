@@ -8,12 +8,14 @@ import {
   Route,
   Link,
 } from "react-router-dom";
+import Landing from "./components/Landing";
 
 import Login from './components/Login/Login';
 import Signup from './components/Login/Signup';
 import Caro from './components/Carousel';
 import Event from './components/Pages/MyEvents';
 import Featured from './components/Pages/Featured';
+import AllEvents from './components/Pages/AllEvents';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -46,11 +48,12 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout setUser={setUser} user={user} handleLogout={handleLogout} event={event} setEvent={setEvent}/>}>
-        <Route index element = {<Caro/>}/>
+        <Route index element = {<Landing/>}/>
         <Route path='/login' element={<Login setUser={setUser}/>} />
         <Route path='/signup' element={<Signup setUser={setUser}/>} />
         <Route path='/event' element={<Event setUser={setUser} event={event} setEvent={setEvent}/>}/>
         <Route path='/featured' element={<Featured/>}/>
+        <Route path='allEvents' element={<AllEvents/>}/>
       </Route>
     )
   )

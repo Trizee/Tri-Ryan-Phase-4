@@ -63,11 +63,11 @@ function Navbar({handleLogout, user, event, setEvent}) {
 
     useEffect(()=>{
         if (!user){
-            setPages(['Create Account','Login'])
+            setPages(['Create Account','Login', 'All Events'])
             setSettings([])
         }
         else{
-            setPages(['My Events', 'Featured'])
+            setPages(['My Events', 'All Events','Featured'])
             setSettings(['Profile', 'Create Event', 'Logout'])
         }
     },[user])
@@ -98,6 +98,9 @@ function Navbar({handleLogout, user, event, setEvent}) {
         }
         else if(pages === 'Featured'){
           navigate('/featured')
+        }
+        else if(pages === 'All Events'){
+          navigate('/allevents')
         }
     }
 

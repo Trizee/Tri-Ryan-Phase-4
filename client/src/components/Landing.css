@@ -1,0 +1,27 @@
+.page-container {
+    display: flex;
+    justify-content: center; /* Horizontally center content /
+    align-items: center; / Vertically center content /
+    height: 100vh; / Make the container take up the full viewport height /
+  }
+
+
+
+.text {
+  text-align: center; / Center text content /
+}
+
+#danceImage {
+  text-align: center; / Center the image horizontally /
+}
+
+#text{
+    text-align: center; / Center the image horizontally */
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 40px;
+}
+
+.background-image img {
+    width: 100%;
+    height: auto;
+  }
