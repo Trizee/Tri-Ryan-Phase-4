@@ -44,7 +44,7 @@ const theme = createTheme({
     },
   });
 
-function Navbar({handleLogout, user, event, setEvent}) {
+function Navbar({handleLogout, user, event, setEvent, eventData,setEventData}) {
 
     const navigate = useNavigate()
 
@@ -154,6 +154,7 @@ function Navbar({handleLogout, user, event, setEvent}) {
       .then(data => {
         setEvent([...event,data])
         postEventHost(data)
+        setEventData([...eventData,data])
         handleClose()
       })
       .catch(error => {
@@ -180,6 +181,7 @@ function Navbar({handleLogout, user, event, setEvent}) {
       })
       .then(data => {
         console.log(data)
+        console.log(eventData)
       })
       .catch(error => {
           console.log("error", error.message);

@@ -48,7 +48,7 @@ export default function Footer() {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          minHeight: '20vh',
+          minHeight: '100vh',
           position:'relative',
         }}
       >
@@ -59,11 +59,10 @@ export default function Footer() {
             py: 4, // Increase the padding vertically to make the footer thicker
             px: 2,
             backgroundColor: '#2e9bd6', // Change the background color to your preference
-            borderRadius: 0, // Set the border radius to 0 for square corners
             marginTop: 'auto', // Use flexbox to ensure the footer stays at the bottom
             width: '100%', // Ensure the footer spans the entire width of the page
             textAlign: 'left', // Align the text content to the left
-            position:'absolute',
+            position:'relative',
             bottom:'0',
           }}
         >

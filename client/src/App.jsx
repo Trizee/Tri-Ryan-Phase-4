@@ -38,22 +38,24 @@ function App() {
   }
 
   const [event,setEvent] = useState([])
+  const [eventData,setEventData] = useState([])
 
   useEffect(()=>{
       fetch('/api/events')
       .then(response => response.json())
-      .then(data => setEvent(data))
+      .then(data => {setEvent(data),setEventData(data)})
     },[])
+
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<RootLayout setUser={setUser} user={user} handleLogout={handleLogout} event={event} setEvent={setEvent}/>}>
+      <Route path="/" element={<RootLayout setUser={setUser} user={user} handleLogout={handleLogout} event={event} setEvent={setEvent} eventData={eventData} setEventData={setEventData}/>}>
         <Route index element = {<Landing />}/>
         <Route path='/login' element={<Login setUser={setUser}/>} />
         <Route path='/signup' element={<Signup setUser={setUser}/>} />
-        <Route path='/event' element={<Event setUser={setUser} event={event} setEvent={setEvent}/>}/>
+        <Route path='/event' element={<Event setUser={setUser} event={event} eventData={eventData} setEventData={setEventData} user={user} setEvent={setEvent}/>}/>
         <Route path='/featured' element={<Featured/>}/>
-        <Route path='/allevents' element={<AllEvents/>}/>
+        <Route path='/allevents' element={<AllEvents event={event} user={user}/>}/>
       </Route>
     )
   )

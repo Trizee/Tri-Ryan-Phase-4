@@ -1,9 +1,14 @@
 import EventCard from "./EventCard"
 import { Grid } from "@mui/material";
+import { useEffect, useState } from "react";
 
-function Event({event,setEvent}){
-    
-    const eventList = event.map(indiEvent => <EventCard key={indiEvent.id} events={indiEvent} deleteEvent={deleteEvent}/>)
+function Event({eventData,setEventData,user,event,setEvent}){
+
+    useEffect(()=>{
+        setEventData(eventData.filter(events => {return events.event_hosts[0].user_id === user.id}))
+    },[])
+
+    const eventList = eventData.map(indiEvent => <EventCard key={indiEvent.id} events={indiEvent} deleteEvent={deleteEvent}/>)
 
     function deleteEvent(id){
         fetch(`/api/events/${id}`,{
@@ -12,8 +17,10 @@ function Event({event,setEvent}){
         })
         .then(r => r.json())
         .then(data => data)
-        const filteredEvents = event.filter(e => e.id !== id)
-        setEvent(filteredEvents)
+        const filteredEvents = eventData.filter(e => e.id !== id)
+        setEventData(filteredEvents)
+        const filteredEvents2 = event.filter(e => e.id !== id)
+        setEvent(filteredEvents2)
         }
     
 

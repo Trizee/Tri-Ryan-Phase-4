@@ -17,7 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import UploadWidget from '../cloudinary/UploadWidget';
 
 
-function EventCard({events,deleteEvent}) {
+function EventCard({events,deleteEvent,user}) {
 
   const location2 = useLocation()
 
@@ -27,6 +27,42 @@ function EventCard({events,deleteEvent}) {
   const [time, setTime] = useState(even.time);
   const [description, setDescription] = useState(even.description);
   const [picture,setPicture] = useState(even.picture)
+
+  const [rName,setRName] = useState('')
+  const [phone,setPhone] = useState('')
+
+  const [rsvp,setRsvp] = useState('RSVP')
+  const [rCount,setRCount] = useState(even.rsvps ? even.rsvps.length : '0')
+
+  function postRSVP(){
+    fetch("/api/rsvps",{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            event_id: even.id,
+            user_id: user.id,
+            name: rName,
+            phone: phone,
+            status: 'Going'
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response error");
+        }
+        return response.json();
+    })
+    .then(data => {
+      console.log(data)
+      setRCount(rCount + 1)
+      handleClose2()
+    })
+    .catch(error => {
+        console.log("error", error.message);
+    });
+}
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,6 +74,7 @@ function EventCard({events,deleteEvent}) {
 
   const [open, setOpen] = React.useState(false);
   const [open1, setOpen1] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
 
   const handleClickOpen1 = () => {
     setOpen1(true);
@@ -45,6 +82,14 @@ function EventCard({events,deleteEvent}) {
 
   const handleClose1 = () => {
     setOpen1(false);
+  };
+
+  const handleClickOpen2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
   };
 
   function updateEvent(id){
@@ -68,8 +113,7 @@ function EventCard({events,deleteEvent}) {
       .then(data => setEven(data))
       handleClose()
     }
-
-
+  
   return (
     <>
     <Dialog open={open} onClose={handleClose}>
@@ -79,7 +123,7 @@ function EventCard({events,deleteEvent}) {
             autoFocus
             margin="dense"
             id="name"
-            label={events.name}
+            label={even.name}
             type="text"
             fullWidth
             variant="standard"
@@ -90,7 +134,7 @@ function EventCard({events,deleteEvent}) {
             autoFocus
             margin="dense"
             id="location"
-            label={events.location}
+            label={even.location}
             type="text"
             fullWidth
             variant="standard"
@@ -112,7 +156,7 @@ function EventCard({events,deleteEvent}) {
             autoFocus
             margin="dense"
             id="description"
-            label={events.description}
+            label={even.description}
             type="text"
             fullWidth
             variant="standard"
@@ -122,7 +166,7 @@ function EventCard({events,deleteEvent}) {
         <UploadWidget setPicture={setPicture}/>
         </DialogContent> 
         <DialogActions>
-          <Button onClick={()=>updateEvent(events.id)}>Commit Changes</Button>
+          <Button onClick={()=>updateEvent(even.id)}>Commit Changes</Button>
         </DialogActions>
     </Dialog>
 
@@ -137,9 +181,39 @@ function EventCard({events,deleteEvent}) {
             <p><strong>Description</strong></p>
             <p>{even.location}</p>
             <p><strong>RSVPs</strong></p>
-            <p>{even.rsvps.length}</p>
+            <p>{rCount}</p>
           </DialogContent> 
       </Dialog>
+
+      <Dialog open={open2} onClose={handleClose2}>
+        <DialogTitle style={{textAlign:'center'}}>RSVP</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label='Name'
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={(e)=>setRName(e.target.value)}
+
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="location"
+            label='Phone Number'
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={(e)=>setPhone(e.target.value)}
+          />
+        </DialogContent> 
+        <DialogActions>
+          <Button onClick={()=>postRSVP()}>Reserve</Button>
+        </DialogActions>
+    </Dialog>
 
     <Grid item s={12} sm={6} md={4}>
     <Card
@@ -175,13 +249,13 @@ function EventCard({events,deleteEvent}) {
         {
           location2.pathname !== '/event' ?
           <>
-        <Button size="small" color="primary">
-          RSVP
+        <Button size="small" color="primary" onClick={handleClickOpen2}>
+        {rsvp}
         </Button>
           </>
           :
           <>
-        <Button size="small" color="primary" onClick={()=>deleteEvent(events.id)}>
+        <Button size="small" color="primary" onClick={()=>deleteEvent(even.id)}>
           Delete
         </Button>
         <Button size="small" color="primary" onClick={handleClickOpen}>

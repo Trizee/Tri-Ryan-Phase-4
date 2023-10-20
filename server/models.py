@@ -13,9 +13,9 @@ class User( db.Model, SerializerMixin):
     username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String, nullable=False)
 
-    rsvps =db.relationship('RSVP', backref='user')
-    event_hosts =db.relationship('EventHosts', backref='user')
-    comments =db.relationship('Comments', backref='user')
+    rsvps =db.relationship('RSVP', backref='user', cascade='all, delete')
+    event_hosts =db.relationship('EventHosts', backref='user', cascade='all, delete')
+    comments =db.relationship('Comments', backref='user', cascade='all, delete')
 
 #///////////////////////////////////////////////////////////////////////////////////
 
@@ -74,8 +74,8 @@ class Event(db.Model, SerializerMixin):
     description = db.Column(db.String)
     picture = db.Column(db.String)
 
-    rsvps =db.relationship('RSVP', backref='event')
-    event_hosts =db.relationship('EventHosts', backref='event')
+    rsvps =db.relationship('RSVP', backref='event', cascade='all, delete')
+    event_hosts =db.relationship('EventHosts', backref='event', cascade='all, delete')
 
     comments =db.relationship('Comments', backref='event')
 
