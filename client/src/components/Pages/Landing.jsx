@@ -1,32 +1,50 @@
 import React from 'react';
-import './Landing.css';
+import { useNavigate } from 'react-router-dom';
 
 function Landing() {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate('/featured');
+  };
+
   return (
-    <div>
-      <div className="page-container">
-        <div className="grid-container">
-          <div className="text">
-            <p id="text">
-              This website has been created for you to find and add events to your area.
-              There is the capability to add these events to your calender and you are also
-              able to see nearby events.
-            </p>
-            <button>Get Started!</button>
-          </div>
-          <div className="image">
-            <img id="danceImage" src="" />
-          </div>
+    <>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px 0',
+          height: '80vh',
+          marginTop:'-25vh'
+        }}
+      >
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: '200px', // Adjust the margin-top to move the text lower
+            fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif',
+            fontSize: '40px',
+          }}
+        >
+          <p id="text">
+            This website has been created for you.<br/>
+            We help find you events to go to.<br/>
+            We give you the capability to add and RSVP events.
+          </p>
+          <button onClick={handleGetStarted} style={{borderRadius:'100px', backgroundColor:'#2e9bd6', color:'#white',padding:'10px'}}>Get Started</button>
         </div>
       </div>
       <div className="background-image">
-      <img
-  src="https://p7.hiclipart.com/preview/113/187/741/music-download-concert-art-concert-crowd.jpg"
-  alt="Background Party Image"
-  style={{ background: 'none' }}
-/>
-</div>
-</div>
+        <img
+          src="https://miro.medium.com/v2/resize:fit:1358/1*Dmw3hv_CHbZEPyFTayw8Yw.png"
+          alt="Background Party Image"
+          style={{ width: '100%', height: 'auto', marginTop:'-40vh'}}
+        />
+      </div>
+      </>
   );
 }
 
